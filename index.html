@@ -59,7 +59,7 @@
   @media (max-width: 640px) { .wrap { padding: 0 20px; } }
   a { color: inherit; }
   button, input, select { font-family: inherit; }
-  #servicios, #proceso, #proyectos { scroll-margin-top: 76px; }
+  #servicios, #proceso, #proyectos, #contacto { scroll-margin-top: 76px; }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
   ::selection { background: var(--cyan); color: var(--bg); }
 
@@ -290,6 +290,28 @@
   .case-links a.primary { background: var(--cyan); color: var(--bg); border-color: var(--cyan); font-weight: 700; }
   .case-links a.primary:hover { background: var(--cyan-bright); border-color: var(--cyan-bright); color: var(--bg); }
 
+  /* ---------- CONTACTO ---------- */
+  .contact { border-top: 1px solid var(--line); }
+  .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 780px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-card {
+    display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 26px; opacity: 0; transform: translateY(18px);
+    transition: opacity .6s var(--ease), transform .3s var(--ease), border-color .3s ease, box-shadow .3s ease;
+  }
+  .contact-grid.is-visible .contact-card { opacity: 1; transform: none; }
+  .contact-grid.is-visible .contact-card:nth-child(1) { transition-delay: .05s; }
+  .contact-grid.is-visible .contact-card:nth-child(2) { transition-delay: .15s; }
+  .contact-grid.is-visible .contact-card:nth-child(3) { transition-delay: .25s; }
+  .contact-card:hover { border-color: var(--cyan); transform: translateY(-4px); box-shadow: 0 16px 32px -18px rgba(47,224,208,0.35); }
+  .contact-icon {
+    width: 42px; height: 42px; border-radius: 10px; margin-bottom: 18px; font-size: 18px;
+    background: rgba(47,224,208,0.08); border: 1px solid rgba(47,224,208,0.25);
+    display: flex; align-items: center; justify-content: center; color: var(--cyan);
+  }
+  .contact-label { font-size: 12px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .contact-value { font-family: var(--font-display); font-size: 17px; color: var(--ink); }
+
   /* ---------- FOOTER ---------- */
   footer { border-top: 1px solid var(--line); padding: 40px 0; position: relative; z-index: 1; }
   footer::before { content: ""; position: absolute; top: -1px; left: 0; right: 0; height: 1px; background: var(--grad); opacity: 0.4; }
@@ -309,6 +331,7 @@
       <a href="#servicios" data-i18n="nav_servicios">Servicios</a>
       <a href="#proceso" data-i18n="nav_proceso">Proceso</a>
       <a href="#proyectos" data-i18n="nav_proyectos">Proyectos</a>
+      <a href="#contacto" data-i18n="nav_contacto">Contacto</a>
     </div>
     <div class="nav-right">
       <button class="btn-lang" id="lang-toggle">EN</button>
@@ -319,6 +342,7 @@
     <a href="#servicios" data-i18n="nav_servicios">Servicios</a>
     <a href="#proceso" data-i18n="nav_proceso">Proceso</a>
     <a href="#proyectos" data-i18n="nav_proyectos">Proyectos</a>
+    <a href="#contacto" data-i18n="nav_contacto">Contacto</a>
   </div>
 </nav>
 
@@ -479,9 +503,35 @@ studio.<span class="c-fn">build</span>({<br>
         <p class="case-desc" data-i18n="case_desc">Landing con sistema de reservas conectado a una base de datos real (Supabase). Incluye protección contra turnos duplicados a nivel de base de datos y panel de administración con datos en vivo.</p>
         <div class="case-links">
           <a class="primary" href="https://barberia-filo.netlify.app" target="_blank" rel="noopener" data-i18n="case_demo">Ver demo ↗</a>
-          <a href="https://github.com/Lissandra2009/Barberia" target="_blank" rel="noopener" data-i18n="case_code">Ver código ↗</a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="contact_eyebrow">Hablemos</div>
+      <h2 data-i18n="contact_h2">Contacto</h2>
+      <p data-i18n="contact_p">Contanos qué necesitás y te respondemos directo, sin formularios largos.</p>
+    </div>
+    <div class="contact-grid" id="contact-grid">
+      <a class="contact-card" href="https://wa.me/584227234521" target="_blank" rel="noopener">
+        <div class="contact-icon">✆</div>
+        <div class="contact-label" data-i18n="contact_wa1_label">WhatsApp</div>
+        <div class="contact-value">+58 422-723-4521</div>
+      </a>
+      <a class="contact-card" href="https://wa.me/584141543565" target="_blank" rel="noopener">
+        <div class="contact-icon">✆</div>
+        <div class="contact-label" data-i18n="contact_wa2_label">WhatsApp</div>
+        <div class="contact-value">+58 414-154-3565</div>
+      </a>
+      <a class="contact-card" href="mailto:manuelmata211@gmail.com">
+        <div class="contact-icon">@</div>
+        <div class="contact-label" data-i18n="contact_email_label">Email</div>
+        <div class="contact-value">manuelmata211@gmail.com</div>
+      </a>
     </div>
   </div>
 </section>
@@ -497,7 +547,7 @@ studio.<span class="c-fn">build</span>({<br>
       </div>
     </div>
     <div class="footer-bottom">
-      <p data-i18n="footer_soon">Contacto y más proyectos, muy pronto.</p>
+      <p data-i18n="footer_copy">© 2026 Studio 39.</p>
     </div>
   </div>
 </footer>
@@ -505,7 +555,7 @@ studio.<span class="c-fn">build</span>({<br>
 <script>
   const translations = {
     es: {
-      nav_servicios: "Servicios", nav_proceso: "Proceso", nav_proyectos: "Proyectos",
+      nav_servicios: "Servicios", nav_proceso: "Proceso", nav_proyectos: "Proyectos", nav_contacto: "Contacto",
       hero_eyebrow: "Desarrollo web a medida",
       hero_p: "Diseñamos y construimos productos web reales para negocios que quieren verse — y funcionar — como una empresa seria. Sin plantillas genéricas.",
       hero_cta_primary: "Ver proyectos", hero_cta_ghost: "Cómo trabajamos",
@@ -527,12 +577,14 @@ studio.<span class="c-fn">build</span>({<br>
       portfolio_eyebrow: "Trabajo real", portfolio_h2: "Proyectos", portfolio_p: "Un ejemplo real de lo que armamos, no un mockup.",
       case_live: "En vivo", case_tag1: "Reservas online", case_tag2: "Base de datos real", case_tag3: "Sin duplicados",
       case_desc: "Landing con sistema de reservas conectado a una base de datos real (Supabase). Incluye protección contra turnos duplicados a nivel de base de datos y panel de administración con datos en vivo.",
-      case_demo: "Ver demo ↗", case_code: "Ver código ↗", case_mock_btn: "Confirmar reserva",
-      footer_tag: "Studio 39 — estudio de desarrollo web.", footer_soon: "Contacto y más proyectos, muy pronto.",
+      case_demo: "Ver demo ↗", case_mock_btn: "Confirmar reserva",
+      contact_eyebrow: "Hablemos", contact_h2: "Contacto", contact_p: "Contanos qué necesitás y te respondemos directo, sin formularios largos.",
+      contact_wa1_label: "WhatsApp", contact_wa2_label: "WhatsApp", contact_email_label: "Email",
+      footer_tag: "Studio 39 — estudio de desarrollo web.", footer_copy: "© 2026 Studio 39.",
       hero_h1_html: 'Sitios web que generan <span class="grad-text">confianza</span>.',
     },
     en: {
-      nav_servicios: "Services", nav_proceso: "Process", nav_proyectos: "Projects",
+      nav_servicios: "Services", nav_proceso: "Process", nav_proyectos: "Projects", nav_contacto: "Contact",
       hero_eyebrow: "Custom web development",
       hero_p: "We design and build real web products for businesses that want to look — and work — like a serious company. No generic templates.",
       hero_cta_primary: "See projects", hero_cta_ghost: "How we work",
@@ -554,8 +606,10 @@ studio.<span class="c-fn">build</span>({<br>
       portfolio_eyebrow: "Real work", portfolio_h2: "Projects", portfolio_p: "A real example of what we build, not a mockup.",
       case_live: "Live", case_tag1: "Online booking", case_tag2: "Real database", case_tag3: "No double-booking",
       case_desc: "Landing page with a booking system connected to a real database (Supabase). Includes database-level protection against duplicate bookings and a live admin panel.",
-      case_demo: "View demo ↗", case_code: "View code ↗", case_mock_btn: "Confirm booking",
-      footer_tag: "Studio 39 — web development studio.", footer_soon: "Contact and more projects, coming soon.",
+      case_demo: "View demo ↗", case_mock_btn: "Confirm booking",
+      contact_eyebrow: "Let's talk", contact_h2: "Contact", contact_p: "Tell us what you need and we'll get back to you directly, no long forms.",
+      contact_wa1_label: "WhatsApp", contact_wa2_label: "WhatsApp", contact_email_label: "Email",
+      footer_tag: "Studio 39 — web development studio.", footer_copy: "© 2026 Studio 39.",
       hero_h1_html: 'Websites that build <span class="grad-text">trust</span>.',
     }
   };
@@ -611,7 +665,7 @@ studio.<span class="c-fn">build</span>({<br>
       }
     });
   }, { threshold: 0.15 });
-  document.querySelectorAll(".reveal, #process-grid, #why-grid").forEach(el => revealObserver.observe(el));
+  document.querySelectorAll(".reveal, #process-grid, #why-grid, #contact-grid").forEach(el => revealObserver.observe(el));
 
   // ============ GLOW QUE SIGUE EL MOUSE (desktop) ============
   const heroEl = document.getElementById("hero");
