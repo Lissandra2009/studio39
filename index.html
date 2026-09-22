@@ -5,119 +5,187 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Studio 39 — Desarrollo web</title>
 <meta name="description" content="Studio 39 — desarrollamos sitios web a medida para negocios que quieren verse y funcionar como una empresa seria. Frontend, backend y bases de datos reales.">
-<meta name="theme-color" content="#0B1220">
+<meta name="theme-color" content="#0A0F1C">
 <meta property="og:title" content="Studio 39 — Desarrollo web">
 <meta property="og:description" content="Sitios web a medida, con backend real. Sin plantillas genéricas.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230B1220'/%3E%3Ctext x='50' y='64' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%232FE0D0' text-anchor='middle'%3E39%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A0F1C'/%3E%3Ctext x='50' y='64' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%232FE0D0' text-anchor='middle'%3E39%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0B1220;
-    --bg-raised: #111A2C;
-    --bg-card: #141F36;
+    --bg: #0A0F1C;
+    --bg-raised: #0F1626;
+    --bg-card: #121B30;
     --ink: #F5F7FA;
     --ink-soft: #A9B4C7;
-    --ink-faint: #6B7690;
+    --ink-faint: #66718A;
     --cyan: #2FE0D0;
-    --cyan-bright: #5FF5E6;
+    --cyan-bright: #6FFCEC;
     --magenta: #FF5FA8;
     --line: rgba(245,247,250,0.08);
     --line-strong: rgba(245,247,250,0.18);
+    --grad: linear-gradient(120deg, var(--cyan), var(--magenta));
     --font-display: "Space Grotesk", sans-serif;
     --font-body: "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --ease: cubic-bezier(.22,.9,.32,1);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body);
+    position: relative;
+    opacity: 0; animation: page-in .5s var(--ease) .05s forwards;
+  }
+  @keyframes page-in { to { opacity: 1; } }
+
+  /* textura + grilla de fondo, sutil */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(245,247,250,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,247,250,0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.035; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
   @media (max-width: 640px) { .wrap { padding: 0 20px; } }
   a { color: inherit; }
   button, input, select { font-family: inherit; }
   #servicios, #proceso, #proyectos { scroll-margin-top: 76px; }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+  ::selection { background: var(--cyan); color: var(--bg); }
 
-  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
   .reveal.is-visible { opacity: 1; transform: none; }
+
+  .grad-text {
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
 
   /* ---------- NAV ---------- */
   .nav {
     position: sticky; top: 0; z-index: 30;
-    background: rgba(11,18,32,0.88); backdrop-filter: blur(6px);
+    background: rgba(10,15,28,0.72); backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
     padding: 16px 0;
   }
-  .nav-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-  .wordmark {
-    font-family: var(--font-display); font-size: 20px; font-weight: 700;
-    letter-spacing: 0.03em; display: flex; align-items: center; gap: 8px;
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; position: relative; z-index: 1; }
+  .wordmark { font-family: var(--font-display); font-size: 19px; font-weight: 700; letter-spacing: 0.02em; display: flex; align-items: center; gap: 9px; }
+  .wordmark-badge {
+    width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--bg);
+    background: var(--grad);
   }
-  .wordmark .dot { color: var(--cyan); }
-  .nav-links { display: flex; gap: 30px; font-size: 13.5px; color: var(--ink-soft); }
-  .nav-links a { text-decoration: none; transition: color .2s ease; }
-  .nav-links a:hover { color: var(--cyan); }
+  .nav-links { display: flex; gap: 34px; font-size: 13.5px; color: var(--ink-soft); }
+  .nav-links a { text-decoration: none; position: relative; padding-bottom: 3px; }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 1px; background: var(--cyan);
+    transition: width .25s var(--ease);
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
   .nav-right { display: flex; align-items: center; gap: 12px; }
   @media (max-width: 640px) { .nav-links { display: none; } }
   .btn-lang {
     background: none; border: 1px solid var(--line-strong); color: var(--ink);
-    padding: 8px 14px; font-size: 12.5px; font-weight: 600; border-radius: 2px; cursor: pointer;
-    transition: border-color .2s ease, color .2s ease;
+    padding: 8px 14px; font-size: 12px; font-weight: 600; border-radius: 20px; cursor: pointer;
+    letter-spacing: 0.03em; transition: border-color .2s ease, color .2s ease, box-shadow .2s ease;
   }
-  .btn-lang:hover { border-color: var(--cyan); color: var(--cyan); }
+  .btn-lang:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 0 3px rgba(47,224,208,0.12); }
   .nav-toggle {
     display: none; background: none; border: 1px solid var(--line-strong); color: var(--ink);
-    width: 38px; height: 38px; border-radius: 2px; cursor: pointer; font-size: 16px;
+    width: 38px; height: 38px; border-radius: 8px; cursor: pointer; font-size: 16px;
   }
   @media (max-width: 640px) { .nav-toggle { display: block; } }
-  .nav-mobile { display: none; flex-direction: column; border-bottom: 1px solid var(--line); background: var(--bg-raised); }
+  .nav-mobile { display: none; flex-direction: column; border-bottom: 1px solid var(--line); background: var(--bg-raised); position: relative; z-index: 1; }
   .nav-mobile.open { display: flex; }
   .nav-mobile a { text-align: left; color: var(--ink); padding: 14px 20px; font-size: 14.5px; text-decoration: none; border-top: 1px solid var(--line); }
 
   /* ---------- HERO ---------- */
-  .hero { position: relative; overflow: hidden; padding: 100px 0 70px; border-bottom: 1px solid var(--line); }
-  .hero-glow {
-    position: absolute; top: -30%; right: -10%; width: 55%; height: 160%;
-    background: radial-gradient(circle, var(--cyan) 0%, transparent 65%);
-    opacity: 0.10; pointer-events: none;
+  .hero { position: relative; overflow: hidden; padding: 84px 0 76px; border-bottom: 1px solid var(--line); }
+  .hero-glow, .hero-glow-2 { position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none; transition: transform .4s ease-out; will-change: transform; }
+  .hero-glow { top: -25%; right: -8%; width: 50%; height: 150%; background: radial-gradient(circle, var(--cyan) 0%, transparent 60%); opacity: 0.16; }
+  .hero-glow-2 { bottom: -35%; left: -10%; width: 38%; height: 110%; background: radial-gradient(circle, var(--magenta) 0%, transparent 60%); opacity: 0.12; }
+  .hero-watermark {
+    position: absolute; top: -6%; right: -2%; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(160px, 26vw, 320px); line-height: 1; color: transparent;
+    -webkit-text-stroke: 1px rgba(245,247,250,0.06); pointer-events: none; user-select: none; z-index: 0;
   }
-  .hero-glow-2 {
-    position: absolute; bottom: -30%; left: -10%; width: 40%; height: 120%;
-    background: radial-gradient(circle, var(--magenta) 0%, transparent 65%);
-    opacity: 0.08; pointer-events: none;
-  }
-  .hero-inner { position: relative; max-width: 640px; }
+  @media (max-width: 720px) { .hero-watermark { display: none; } }
+
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 46px; align-items: center; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+
+  .hero-inner > * { opacity: 0; transform: translateY(16px); animation: fade-up .7s var(--ease) forwards; }
+  @keyframes fade-up { to { opacity: 1; transform: none; } }
+  .eyebrow { animation-delay: .1s; }
+  .hero h1 { animation-delay: .18s; }
+  .hero p { animation-delay: .26s; }
+  .hero-actions { animation-delay: .34s; }
+  .hero-stats { animation-delay: .42s; }
+
   .eyebrow {
     font-size: 12.5px; color: var(--cyan); letter-spacing: 0.08em; text-transform: uppercase;
-    margin-bottom: 16px; font-weight: 600;
+    margin-bottom: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px;
   }
+  .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 4px rgba(47,224,208,0.18); }
   .hero h1 {
     font-family: var(--font-display); font-weight: 700;
-    font-size: clamp(34px, 5.5vw, 54px); line-height: 1.08; margin: 0 0 22px; letter-spacing: -0.01em;
+    font-size: clamp(32px, 4.6vw, 50px); line-height: 1.1; margin: 0 0 22px; letter-spacing: -0.01em;
   }
   .hero p { color: var(--ink-soft); font-size: 16.5px; line-height: 1.65; max-width: 48ch; margin: 0 0 30px; }
   .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
   .btn-primary {
     background: var(--cyan); color: var(--bg); border: none;
-    padding: 14px 26px; font-size: 14.5px; font-weight: 700; border-radius: 2px; cursor: pointer;
-    transition: background .2s ease, transform .2s ease;
+    padding: 14px 26px; font-size: 14.5px; font-weight: 700; border-radius: 8px; cursor: pointer;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s ease;
+    box-shadow: 0 0 0 0 rgba(47,224,208,0.4);
   }
-  .btn-primary:hover { background: var(--cyan-bright); transform: translateY(-1px); }
+  .btn-primary:hover { background: var(--cyan-bright); transform: translateY(-2px); box-shadow: 0 8px 24px -6px rgba(47,224,208,0.5); }
   .btn-ghost {
     background: none; border: 1px solid var(--line-strong); color: var(--ink);
-    padding: 14px 22px; font-size: 14.5px; border-radius: 2px; text-decoration: none; cursor: pointer;
-    transition: border-color .2s ease, color .2s ease;
+    padding: 14px 22px; font-size: 14.5px; border-radius: 8px; text-decoration: none; cursor: pointer;
+    transition: border-color .2s ease, color .2s ease, transform .2s var(--ease);
   }
-  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); }
 
   .hero-stats { display: flex; gap: 34px; flex-wrap: wrap; margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); }
   .hero-stat b { display: block; font-family: var(--font-display); font-size: 24px; color: var(--cyan); }
   .hero-stat span { font-size: 11.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.05em; }
 
+  /* ---------- HERO CODE MOCKUP ---------- */
+  .code-window {
+    background: #0D1424; border: 1px solid var(--line-strong); border-radius: 12px; overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(47,224,208,0.06);
+    animation: fade-up .8s var(--ease) .3s forwards; opacity: 0; transform: translateY(16px) rotate(0.4deg);
+  }
+  .code-window-bar { display: flex; align-items: center; gap: 6px; padding: 12px 14px; background: #0A0F1C; border-bottom: 1px solid var(--line); }
+  .code-window-bar span { width: 10px; height: 10px; border-radius: 50%; background: rgba(245,247,250,0.14); }
+  .code-window-bar span:nth-child(1) { background: #FF5F57; opacity: .7; }
+  .code-window-bar span:nth-child(2) { background: #FEBC2E; opacity: .7; }
+  .code-window-bar span:nth-child(3) { background: #28C840; opacity: .7; }
+  .code-window-title { margin-left: 8px; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-faint); }
+  .code-window-body { padding: 22px 20px; font-family: var(--font-mono); font-size: 13px; line-height: 1.9; }
+  .code-window-body .c-key { color: var(--magenta); }
+  .code-window-body .c-fn { color: var(--cyan); }
+  .code-window-body .c-str { color: #FFD479; }
+  .code-window-body .c-prop { color: var(--ink-soft); }
+  .code-window-body .c-com { color: var(--ink-faint); }
+  .code-cursor { display: inline-block; width: 7px; height: 15px; background: var(--cyan); vertical-align: -2px; animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
   /* ---------- SECTIONS ---------- */
-  section { padding: 84px 0; }
-  .section-head { max-width: 56ch; margin-bottom: 44px; }
+  section { padding: 88px 0; position: relative; z-index: 1; }
+  .section-head { max-width: 56ch; margin-bottom: 46px; }
+  .section-eyebrow { font-size: 12px; color: var(--magenta); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
   .section-head h2 {
     font-family: var(--font-display); font-weight: 700;
     font-size: clamp(24px, 3.6vw, 34px); margin: 0 0 12px; letter-spacing: -0.01em;
@@ -129,54 +197,86 @@
   .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
   @media (max-width: 720px) { .services-grid { grid-template-columns: 1fr; } }
   .service-card {
-    background: var(--bg-card); border: 1px solid var(--line); padding: 26px;
-    transition: border-color .25s ease, transform .25s ease;
+    position: relative; background: var(--bg-card); border: 1px solid var(--line); border-radius: 12px; padding: 26px;
+    transition: border-color .3s ease, transform .3s var(--ease), box-shadow .3s ease;
+    overflow: hidden;
   }
-  .service-card:hover { border-color: var(--line-strong); transform: translateY(-2px); }
-  .service-mark { color: var(--cyan); font-family: var(--font-display); font-size: 13px; margin-bottom: 12px; letter-spacing: 0.04em; }
+  .service-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad);
+    transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease);
+  }
+  .service-card:hover { border-color: var(--line-strong); transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-mark { color: var(--cyan); font-family: var(--font-mono); font-size: 12.5px; margin-bottom: 14px; letter-spacing: 0.04em; }
   .service-name { font-family: var(--font-display); font-size: 19px; margin-bottom: 8px; }
   .service-desc { font-size: 13.5px; color: var(--ink-faint); line-height: 1.6; margin: 0; }
 
+  /* ---------- POR QUÉ ---------- */
+  .why { background: var(--bg-raised); border-top: 1px solid var(--line); }
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  @media (max-width: 780px) { .why-grid { grid-template-columns: 1fr; } }
+  .why-card {
+    opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease);
+  }
+  .why-grid.is-visible .why-card { opacity: 1; transform: none; }
+  .why-grid.is-visible .why-card:nth-child(1) { transition-delay: .05s; }
+  .why-grid.is-visible .why-card:nth-child(2) { transition-delay: .15s; }
+  .why-grid.is-visible .why-card:nth-child(3) { transition-delay: .25s; }
+  .why-icon {
+    width: 42px; height: 42px; border-radius: 10px; margin-bottom: 18px;
+    background: rgba(47,224,208,0.08); border: 1px solid rgba(47,224,208,0.25);
+    display: flex; align-items: center; justify-content: center; color: var(--cyan); font-family: var(--font-display); font-weight: 700;
+  }
+  .why-name { font-family: var(--font-display); font-size: 17px; margin-bottom: 8px; }
+  .why-desc { font-size: 13.5px; color: var(--ink-faint); line-height: 1.65; margin: 0; }
+
   /* ---------- PROCESO ---------- */
-  .process { background: var(--bg-raised); border-top: 1px solid var(--line); }
-  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .process { border-top: 1px solid var(--line); }
+  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; position: relative; }
   @media (max-width: 860px) { .process-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) { .process-grid { grid-template-columns: 1fr; } }
-  .process-step {
-    opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease;
-  }
+  .process-step { position: relative; opacity: 0; transform: translateY(16px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
   .process-grid.is-visible .process-step { opacity: 1; transform: none; }
   .process-grid.is-visible .process-step:nth-child(1) { transition-delay: .05s; }
-  .process-grid.is-visible .process-step:nth-child(2) { transition-delay: .12s; }
-  .process-grid.is-visible .process-step:nth-child(3) { transition-delay: .19s; }
-  .process-grid.is-visible .process-step:nth-child(4) { transition-delay: .26s; }
+  .process-grid.is-visible .process-step:nth-child(2) { transition-delay: .13s; }
+  .process-grid.is-visible .process-step:nth-child(3) { transition-delay: .21s; }
+  .process-grid.is-visible .process-step:nth-child(4) { transition-delay: .29s; }
   .process-num {
-    font-family: var(--font-display); font-size: 30px; color: var(--magenta);
+    font-family: var(--font-display); font-size: 28px; color: transparent; -webkit-text-stroke: 1.3px var(--magenta);
     border-bottom: 1px solid var(--line); padding-bottom: 16px; margin-bottom: 14px;
   }
   .process-name { font-family: var(--font-display); font-size: 16.5px; margin-bottom: 6px; }
   .process-desc { font-size: 13px; color: var(--ink-faint); line-height: 1.55; margin: 0; }
 
   /* ---------- PROYECTOS ---------- */
+  .portfolio { background: var(--bg-raised); border-top: 1px solid var(--line); }
   .case-card {
     display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-    background: var(--bg-card); border: 1px solid var(--line); overflow: hidden;
+    background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
   }
+  .case-card:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -24px rgba(0,0,0,0.55); }
   @media (max-width: 760px) { .case-card { grid-template-columns: 1fr; } }
   .case-visual {
-    background: #211A18; padding: 28px; display: flex; flex-direction: column; gap: 10px; justify-content: center;
-    border-right: 1px solid var(--line); min-height: 220px;
+    background: linear-gradient(160deg, #241B18, #180F0D); padding: 30px; display: flex; flex-direction: column; gap: 10px; justify-content: center;
+    border-right: 1px solid var(--line); min-height: 240px; position: relative;
   }
   @media (max-width: 760px) { .case-visual { border-right: none; border-bottom: 1px solid var(--line); } }
-  .case-browser { background: #2F2521; border: 1px solid rgba(241,233,222,0.12); border-radius: 4px; overflow: hidden; }
-  .case-browser-bar { display: flex; gap: 5px; padding: 8px 10px; background: #171210; }
+  .case-live {
+    position: absolute; top: 16px; right: 16px; display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 10.5px; color: #7FA37F; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .case-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #7FA37F; box-shadow: 0 0 0 3px rgba(127,163,127,0.25); animation: pulse-dot 1.8s ease-in-out infinite; }
+  @keyframes pulse-dot { 50% { opacity: .4; } }
+  .case-browser { background: #2F2521; border: 1px solid rgba(241,233,222,0.12); border-radius: 8px; overflow: hidden; box-shadow: 0 20px 40px -16px rgba(0,0,0,0.6); }
+  .case-browser-bar { display: flex; gap: 5px; padding: 9px 10px; background: #171210; }
   .case-browser-bar span { width: 8px; height: 8px; border-radius: 50%; background: rgba(241,233,222,0.25); }
-  .case-browser-body { padding: 18px 16px; }
-  .case-browser-title { font-family: Oswald, sans-serif; color: #F1E9DE; font-size: 15px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
-  .case-browser-line { height: 6px; background: rgba(241,233,222,0.12); border-radius: 3px; margin-bottom: 6px; }
+  .case-browser-body { padding: 20px 18px; }
+  .case-browser-title { font-family: Georgia, serif; color: #F1E9DE; font-size: 16px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; font-weight: 700; }
+  .case-browser-line { height: 6px; background: rgba(241,233,222,0.12); border-radius: 3px; margin-bottom: 7px; }
   .case-browser-line.short { width: 55%; }
-  .case-browser-btn { display: inline-block; margin-top: 10px; background: #7A2E2E; color: #F1E9DE; font-size: 10.5px; padding: 6px 12px; border-radius: 2px; }
-  .case-body { padding: 32px; display: flex; flex-direction: column; justify-content: center; }
+  .case-browser-btn { display: inline-block; margin-top: 10px; background: #7A2E2E; color: #F1E9DE; font-size: 10.5px; padding: 7px 14px; border-radius: 4px; font-weight: 600; }
+  .case-body { padding: 34px; display: flex; flex-direction: column; justify-content: center; }
   .case-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
   .case-tag { border: 1px solid var(--line-strong); color: var(--ink-faint); font-size: 11px; padding: 4px 10px; border-radius: 20px; }
   .case-name { font-family: var(--font-display); font-size: 22px; margin-bottom: 10px; }
@@ -184,14 +284,15 @@
   .case-links { display: flex; gap: 12px; flex-wrap: wrap; }
   .case-links a {
     font-size: 13.5px; text-decoration: none; border: 1px solid var(--line-strong); padding: 10px 18px;
-    border-radius: 2px; transition: border-color .2s ease, color .2s ease;
+    border-radius: 8px; transition: border-color .2s ease, color .2s ease, transform .2s var(--ease);
   }
-  .case-links a:hover { border-color: var(--cyan); color: var(--cyan); }
+  .case-links a:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); }
   .case-links a.primary { background: var(--cyan); color: var(--bg); border-color: var(--cyan); font-weight: 700; }
   .case-links a.primary:hover { background: var(--cyan-bright); border-color: var(--cyan-bright); color: var(--bg); }
 
   /* ---------- FOOTER ---------- */
-  footer { border-top: 1px solid var(--line); padding: 40px 0; }
+  footer { border-top: 1px solid var(--line); padding: 40px 0; position: relative; z-index: 1; }
+  footer::before { content: ""; position: absolute; top: -1px; left: 0; right: 0; height: 1px; background: var(--grad); opacity: 0.4; }
   .footer-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
   footer p { color: var(--ink-faint); font-size: 13px; margin: 0; }
   .footer-stack { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -203,7 +304,7 @@
 
 <nav class="nav">
   <div class="wrap nav-inner">
-    <div class="wordmark">STUDIO<span class="dot">39</span></div>
+    <div class="wordmark"><span class="wordmark-badge">39</span>STUDIO</div>
     <div class="nav-links">
       <a href="#servicios" data-i18n="nav_servicios">Servicios</a>
       <a href="#proceso" data-i18n="nav_proceso">Proceso</a>
@@ -221,21 +322,38 @@
   </div>
 </nav>
 
-<header class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-glow-2"></div>
-  <div class="wrap hero-inner">
-    <div class="eyebrow" data-i18n="hero_eyebrow">Desarrollo web a medida</div>
-    <h1 data-i18n="hero_h1">Sitios web que generan confianza.</h1>
-    <p data-i18n="hero_p">Diseñamos y construimos productos web reales para negocios que quieren verse -y funcionar- como una empresa seria. Sin plantillas genéricas.</p>
-    <div class="hero-actions">
-      <button class="btn-primary" onclick="document.getElementById('proyectos').scrollIntoView({behavior:'smooth'})" data-i18n="hero_cta_primary">Ver proyectos</button>
-      <a class="btn-ghost" href="#proceso" data-i18n="hero_cta_ghost">Cómo trabajamos</a>
+<header class="hero" id="hero">
+  <div class="hero-glow" id="glow1"></div>
+  <div class="hero-glow-2" id="glow2"></div>
+  <div class="hero-watermark">39</div>
+  <div class="wrap hero-grid">
+    <div class="hero-inner">
+      <div class="eyebrow"><span class="eyebrow-dot"></span><span data-i18n="hero_eyebrow">Desarrollo web a medida</span></div>
+      <h1 data-i18n-html="hero_h1">Sitios web que generan <span class="grad-text">confianza</span>.</h1>
+      <p data-i18n="hero_p">Diseñamos y construimos productos web reales para negocios que quieren verse — y funcionar — como una empresa seria. Sin plantillas genéricas.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('proyectos').scrollIntoView({behavior:'smooth'})" data-i18n="hero_cta_primary">Ver proyectos</button>
+        <a class="btn-ghost" href="#proceso" data-i18n="hero_cta_ghost">Cómo trabajamos</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>100%</b><span data-i18n="stat1_s">Código propio</span></div>
+        <div class="hero-stat"><b data-i18n="stat2_b">Full-stack</b><span data-i18n="stat2_s">Front + backend real</span></div>
+        <div class="hero-stat"><b>24–72h</b><span data-i18n="stat3_s">Primera propuesta</span></div>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><b>100%</b><span data-i18n="stat1_s">Código propio</span></div>
-      <div class="hero-stat"><b data-i18n="stat2_b">Full-stack</b><span data-i18n="stat2_s">Front + backend real</span></div>
-      <div class="hero-stat"><b>24–72h</b><span data-i18n="stat3_s">Primera propuesta</span></div>
+    <div class="code-window">
+      <div class="code-window-bar">
+        <span></span><span></span><span></span>
+        <span class="code-window-title">studio39.js</span>
+      </div>
+      <div class="code-window-body"><span class="c-com">// sin builders, sin plantillas</span><br>
+<span class="c-key">const</span> studio = <span class="c-key">new</span> <span class="c-fn">Studio39</span>();<br><br>
+studio.<span class="c-fn">build</span>({<br>
+&nbsp;&nbsp;<span class="c-prop">frontend</span>: <span class="c-key">true</span>,<br>
+&nbsp;&nbsp;<span class="c-prop">backend</span>: <span class="c-str">"real"</span>,<br>
+&nbsp;&nbsp;<span class="c-prop">database</span>: <span class="c-str">"postgres"</span>,<br>
+&nbsp;&nbsp;<span class="c-prop">templates</span>: <span class="c-key">false</span><br>
+});<span class="code-cursor"></span></div>
     </div>
   </div>
 </header>
@@ -243,6 +361,7 @@
 <section id="servicios" class="services">
   <div class="wrap">
     <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="services_eyebrow">Qué hacemos</div>
       <h2 data-i18n="services_h2">Servicios</h2>
       <p data-i18n="services_p">Cada proyecto se construye a medida — nada de plantillas armadas.</p>
     </div>
@@ -271,9 +390,37 @@
   </div>
 </section>
 
+<section class="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="why_eyebrow">Diferencial</div>
+      <h2 data-i18n="why_h2">Por qué Studio 39</h2>
+      <p data-i18n="why_p">No armamos sitios genéricos con builders — construimos software real.</p>
+    </div>
+    <div class="why-grid" id="why-grid">
+      <div class="why-card">
+        <div class="why-icon">&lt;/&gt;</div>
+        <div class="why-name" data-i18n="why1_name">Código real</div>
+        <p class="why-desc" data-i18n="why1_desc">Nada de builders ni plantillas — cada línea está escrita a medida de tu proyecto.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">→</div>
+        <div class="why-name" data-i18n="why2_name">Comunicación directa</div>
+        <p class="why-desc" data-i18n="why2_desc">Hablás con quien programa, no con un intermediario que traduce mal.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">↑</div>
+        <div class="why-name" data-i18n="why3_name">Pensado para crecer</div>
+        <p class="why-desc" data-i18n="why3_desc">Base de datos y arquitectura reales desde el día uno, no un prototipo descartable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="proceso" class="process">
   <div class="wrap">
     <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="process_eyebrow">Metodología</div>
       <h2 data-i18n="process_h2">Cómo trabajamos</h2>
       <p data-i18n="process_p">Un proceso simple, sin vueltas, de la idea al sitio publicado.</p>
     </div>
@@ -305,11 +452,13 @@
 <section id="proyectos" class="portfolio">
   <div class="wrap">
     <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="portfolio_eyebrow">Trabajo real</div>
       <h2 data-i18n="portfolio_h2">Proyectos</h2>
       <p data-i18n="portfolio_p">Un ejemplo real de lo que armamos, no un mockup.</p>
     </div>
     <div class="case-card reveal">
       <div class="case-visual">
+        <div class="case-live"><span class="case-live-dot"></span><span data-i18n="case_live">En vivo</span></div>
         <div class="case-browser">
           <div class="case-browser-bar"><span></span><span></span><span></span></div>
           <div class="case-browser-body">
@@ -358,52 +507,61 @@
     es: {
       nav_servicios: "Servicios", nav_proceso: "Proceso", nav_proyectos: "Proyectos",
       hero_eyebrow: "Desarrollo web a medida",
-      hero_h1: "Sitios web que generan confianza.",
       hero_p: "Diseñamos y construimos productos web reales para negocios que quieren verse — y funcionar — como una empresa seria. Sin plantillas genéricas.",
       hero_cta_primary: "Ver proyectos", hero_cta_ghost: "Cómo trabajamos",
       stat1_s: "Código propio", stat2_b: "Full-stack", stat2_s: "Front + backend real", stat3_s: "Primera propuesta",
-      services_h2: "Servicios", services_p: "Cada proyecto se construye a medida — nada de plantillas armadas.",
+      services_eyebrow: "Qué hacemos", services_h2: "Servicios", services_p: "Cada proyecto se construye a medida — nada de plantillas armadas.",
       svc1_name: "Landing pages", svc1_desc: "Sitios de presentación rápidos, livianos y a medida de tu marca.",
       svc2_name: "Sistemas a medida", svc2_desc: "Reservas, paneles de administración y lógica de negocio real.",
       svc3_name: "Integraciones", svc3_desc: "Bases de datos, APIs de terceros y pagos, conectados de verdad.",
       svc4_name: "Mantenimiento", svc4_desc: "Cambios, soporte y mejoras continuas después del lanzamiento.",
-      process_h2: "Cómo trabajamos", process_p: "Un proceso simple, sin vueltas, de la idea al sitio publicado.",
+      why_eyebrow: "Diferencial", why_h2: "Por qué Studio 39", why_p: "No armamos sitios genéricos con builders — construimos software real.",
+      why1_name: "Código real", why1_desc: "Nada de builders ni plantillas — cada línea está escrita a medida de tu proyecto.",
+      why2_name: "Comunicación directa", why2_desc: "Hablás con quien programa, no con un intermediario que traduce mal.",
+      why3_name: "Pensado para crecer", why3_desc: "Base de datos y arquitectura reales desde el día uno, no un prototipo descartable.",
+      process_eyebrow: "Metodología", process_h2: "Cómo trabajamos", process_p: "Un proceso simple, sin vueltas, de la idea al sitio publicado.",
       step1_name: "Diagnóstico", step1_desc: "Entendemos qué necesita tu negocio, sin tecnicismos.",
       step2_name: "Diseño", step2_desc: "Armamos una propuesta visual pensada para tu marca.",
       step3_name: "Desarrollo", step3_desc: "Construimos con tecnología real: frontend, backend y base de datos.",
       step4_name: "Lanzamiento", step4_desc: "Publicamos, probamos todo y dejamos el sitio funcionando.",
-      portfolio_h2: "Proyectos", portfolio_p: "Un ejemplo real de lo que armamos, no un mockup.",
-      case_tag1: "Reservas online", case_tag2: "Base de datos real", case_tag3: "Sin duplicados",
+      portfolio_eyebrow: "Trabajo real", portfolio_h2: "Proyectos", portfolio_p: "Un ejemplo real de lo que armamos, no un mockup.",
+      case_live: "En vivo", case_tag1: "Reservas online", case_tag2: "Base de datos real", case_tag3: "Sin duplicados",
       case_desc: "Landing con sistema de reservas conectado a una base de datos real (Supabase). Incluye protección contra turnos duplicados a nivel de base de datos y panel de administración con datos en vivo.",
       case_demo: "Ver demo ↗", case_code: "Ver código ↗", case_mock_btn: "Confirmar reserva",
       footer_tag: "Studio 39 — estudio de desarrollo web.", footer_soon: "Contacto y más proyectos, muy pronto.",
+      hero_h1_html: 'Sitios web que generan <span class="grad-text">confianza</span>.',
     },
     en: {
       nav_servicios: "Services", nav_proceso: "Process", nav_proyectos: "Projects",
       hero_eyebrow: "Custom web development",
-      hero_h1: "Websites that build trust.",
       hero_p: "We design and build real web products for businesses that want to look — and work — like a serious company. No generic templates.",
       hero_cta_primary: "See projects", hero_cta_ghost: "How we work",
       stat1_s: "Custom code", stat2_b: "Full-stack", stat2_s: "Real front + backend", stat3_s: "First proposal",
-      services_h2: "Services", services_p: "Every project is built to order — no pre-made templates.",
+      services_eyebrow: "What we do", services_h2: "Services", services_p: "Every project is built to order — no pre-made templates.",
       svc1_name: "Landing pages", svc1_desc: "Fast, lightweight presentation sites tailored to your brand.",
       svc2_name: "Custom systems", svc2_desc: "Bookings, admin panels and real business logic.",
       svc3_name: "Integrations", svc3_desc: "Databases, third-party APIs and payments, actually connected.",
       svc4_name: "Maintenance", svc4_desc: "Changes, support and ongoing improvements after launch.",
-      process_h2: "How we work", process_p: "A simple, straightforward process from idea to live site.",
+      why_eyebrow: "What sets us apart", why_h2: "Why Studio 39", why_p: "We don't build generic sites with page builders — we build real software.",
+      why1_name: "Real code", why1_desc: "No builders or templates — every line is written to measure for your project.",
+      why2_name: "Direct communication", why2_desc: "You talk to the person who codes, not a middleman who translates poorly.",
+      why3_name: "Built to grow", why3_desc: "Real database and architecture from day one, not a throwaway prototype.",
+      process_eyebrow: "Methodology", process_h2: "How we work", process_p: "A simple, straightforward process from idea to live site.",
       step1_name: "Discovery", step1_desc: "We understand what your business needs, no jargon.",
       step2_name: "Design", step2_desc: "We put together a visual proposal built for your brand.",
       step3_name: "Development", step3_desc: "We build with real technology: frontend, backend and database.",
       step4_name: "Launch", step4_desc: "We publish, test everything and leave the site running.",
-      portfolio_h2: "Projects", portfolio_p: "A real example of what we build, not a mockup.",
-      case_tag1: "Online booking", case_tag2: "Real database", case_tag3: "No double-booking",
+      portfolio_eyebrow: "Real work", portfolio_h2: "Projects", portfolio_p: "A real example of what we build, not a mockup.",
+      case_live: "Live", case_tag1: "Online booking", case_tag2: "Real database", case_tag3: "No double-booking",
       case_desc: "Landing page with a booking system connected to a real database (Supabase). Includes database-level protection against duplicate bookings and a live admin panel.",
       case_demo: "View demo ↗", case_code: "View code ↗", case_mock_btn: "Confirm booking",
       footer_tag: "Studio 39 — web development studio.", footer_soon: "Contact and more projects, coming soon.",
+      hero_h1_html: 'Websites that build <span class="grad-text">trust</span>.',
     }
   };
 
   const langToggle = document.getElementById("lang-toggle");
+  const heroH1 = document.querySelector("[data-i18n-html='hero_h1']");
 
   function applyLang(lang) {
     document.documentElement.lang = lang;
@@ -411,6 +569,7 @@
       const key = el.getAttribute("data-i18n");
       if (translations[lang][key]) el.textContent = translations[lang][key];
     });
+    if (heroH1) heroH1.innerHTML = translations[lang].hero_h1_html;
     langToggle.textContent = lang === "es" ? "EN" : "ES";
     localStorage.setItem("studio39_lang", lang);
   }
@@ -452,7 +611,21 @@
       }
     });
   }, { threshold: 0.15 });
-  document.querySelectorAll(".reveal, #process-grid").forEach(el => revealObserver.observe(el));
+  document.querySelectorAll(".reveal, #process-grid, #why-grid").forEach(el => revealObserver.observe(el));
+
+  // ============ GLOW QUE SIGUE EL MOUSE (desktop) ============
+  const heroEl = document.getElementById("hero");
+  const glow1 = document.getElementById("glow1");
+  const glow2 = document.getElementById("glow2");
+  if (window.matchMedia("(hover: hover) and (min-width: 900px)").matches) {
+    heroEl.addEventListener("mousemove", (e) => {
+      const r = heroEl.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      glow1.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+      glow2.style.transform = `translate(${x * -24}px, ${y * -24}px)`;
+    });
+  }
 </script>
 </body>
 </html>
